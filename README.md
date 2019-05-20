@@ -1,8 +1,5 @@
 # Hotel Booking System
 
-## Demo
-
-
 ## Overview
 A software is built for supervisor-side to manage the booking system for small-hotel businesses.
 
