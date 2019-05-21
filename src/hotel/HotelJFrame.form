@@ -155,7 +155,7 @@
                                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                           <Component id="addressL" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="emailL" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="emailL" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -170,10 +170,10 @@
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jobL" min="-2" max="-2" attributes="0"/>
                                               <Component id="phoneL" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jobL" min="-2" pref="53" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jobVal" pref="142" max="32767" attributes="0"/>
                                               <Component id="phoneVal" max="32767" attributes="0"/>
@@ -254,7 +254,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Job:"/>
+                    <Property name="text" type="java.lang.String" value="Position:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="phoneL">
@@ -302,7 +302,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Software Development"/>
+                    <Property name="text" type="java.lang.String" value="Software Developer"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="addressL1">

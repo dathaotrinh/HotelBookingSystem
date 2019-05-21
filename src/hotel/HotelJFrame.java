@@ -23,7 +23,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import net.proteanit.sql.DbUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -332,7 +331,7 @@ public class HotelJFrame extends javax.swing.JFrame {
         addressL.setText("Address:");
 
         jobL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jobL.setText("Job:");
+        jobL.setText("Position:");
 
         phoneL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         phoneL.setText("Phone:");
@@ -350,7 +349,7 @@ public class HotelJFrame extends javax.swing.JFrame {
         phoneVal.setText("510-309-3885");
 
         jobVal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jobVal.setText("Software Development");
+        jobVal.setText("Software Developer");
 
         addressL1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         addressL1.setText("Website:");
@@ -385,9 +384,9 @@ public class HotelJFrame extends javax.swing.JFrame {
                                     .addComponent(emailVal, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jobL)
-                                    .addComponent(phoneL))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                    .addComponent(phoneL)
+                                    .addComponent(jobL, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jobVal, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                                     .addComponent(phoneVal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
