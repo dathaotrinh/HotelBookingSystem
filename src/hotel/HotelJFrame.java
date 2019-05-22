@@ -1806,10 +1806,9 @@ public class HotelJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fileChooserButtonActionPerformed
 
     private void takePicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takePicButtonActionPerformed
+
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        
-        WebcamCapture w = new WebcamCapture();
-        
+            
         VideoCapture camera = new VideoCapture(0);
         Mat frame = new Mat();
         
@@ -1831,7 +1830,8 @@ public class HotelJFrame extends javax.swing.JFrame {
         
         camera.release();
         
-        w.displayImage(w.Mat2BufferedImage(Imgcodecs.imread("camera.jpg")), profile);
+        DisplayWebcam w = new DisplayWebcam(profile);
+        
     }//GEN-LAST:event_takePicButtonActionPerformed
 
     private void setTextsManager()
