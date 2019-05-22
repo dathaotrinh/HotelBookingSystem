@@ -3,6 +3,8 @@ package hotel;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,6 +25,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -245,6 +251,7 @@ public class HotelJFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         fileChooserButton = new javax.swing.JButton();
+        takePicButton = new javax.swing.JButton();
         customerDetailsPanel = new javax.swing.JPanel();
         leftPanel = new javax.swing.JPanel();
         resIDLabel = new javax.swing.JLabel();
@@ -586,6 +593,14 @@ public class HotelJFrame extends javax.swing.JFrame {
             }
         });
 
+        takePicButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        takePicButton.setText("Take a picture");
+        takePicButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                takePicButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout customerListPanelLayout = new javax.swing.GroupLayout(customerListPanel);
         customerListPanel.setLayout(customerListPanelLayout);
         customerListPanelLayout.setHorizontalGroup(
@@ -607,12 +622,12 @@ public class HotelJFrame extends javax.swing.JFrame {
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(customerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerListPanelLayout.createSequentialGroup()
+                            .addGroup(customerListPanelLayout.createSequentialGroup()
                                 .addComponent(fileChooserButton)
-                                .addGap(89, 89, 89))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerListPanelLayout.createSequentialGroup()
-                                .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(takePicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(profile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42))))
         );
         customerListPanelLayout.setVerticalGroup(
             customerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,7 +637,9 @@ public class HotelJFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerListPanelLayout.createSequentialGroup()
                         .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(fileChooserButton)
+                        .addGroup(customerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fileChooserButton)
+                            .addComponent(takePicButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(customerListPanelLayout.createSequentialGroup()
                         .addGroup(customerListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1768,7 +1785,7 @@ public class HotelJFrame extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(newImg);
         return icon;
     }
-    
+
     private void fileChooserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser fChooser = new JFileChooser();
@@ -1787,6 +1804,35 @@ public class HotelJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No file selected.");
         }
     }//GEN-LAST:event_fileChooserButtonActionPerformed
+
+    private void takePicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takePicButtonActionPerformed
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        
+        WebcamCapture w = new WebcamCapture();
+        
+        VideoCapture camera = new VideoCapture(0);
+        Mat frame = new Mat();
+        
+        if(!camera.isOpened())
+        {
+            JOptionPane.showMessageDialog(this, "Camera is not working properly.");
+        }
+        else
+        {
+            while(true)
+            {
+                if(camera.read(frame))
+                {
+                    Imgcodecs.imwrite("camera.jpg", frame);
+                    break;
+                }
+            }
+        }
+        
+        camera.release();
+        
+        w.displayImage(w.Mat2BufferedImage(Imgcodecs.imread("camera.jpg")), profile);
+    }//GEN-LAST:event_takePicButtonActionPerformed
 
     private void setTextsManager()
     {
@@ -1955,6 +2001,7 @@ public class HotelJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel skillL;
     private javax.swing.JPanel skillP;
     private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JButton takePicButton;
     private javax.swing.JLabel techL;
     private javax.swing.JLabel techVal;
     private javax.swing.JLabel totalLabel;
