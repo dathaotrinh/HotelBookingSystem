@@ -37,11 +37,14 @@ public class HotelJFrame extends javax.swing.JFrame {
      */
     Connection conn = null; // declare a Connection object named conn and assign null to conn
     Statement stmt = null; // declare a Statement object named stmt and assign null to stmt
-  
+    PreparedStatement preparedStmt = null;
+    ResultSet rSet = null;
+
     public HotelJFrame() { // create a constructor for HotelJFrame
         initComponents();  // include all the things declared in the initComponents method to the contructor
     //    showTableData();
-    
+        
+
         setTextsManager();
         
         try{
@@ -217,7 +220,7 @@ public class HotelJFrame extends javax.swing.JFrame {
         phoneVal = new javax.swing.JLabel();
         jobVal = new javax.swing.JLabel();
         addressL1 = new javax.swing.JLabel();
-        addressVal1 = new javax.swing.JLabel();
+        websiteVal = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         skillP = new javax.swing.JPanel();
         skillL = new javax.swing.JLabel();
@@ -315,7 +318,6 @@ public class HotelJFrame extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(0, 0));
 
         profile.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/img_0381_icon.png"))); // NOI18N
 
         fullNameL.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         fullNameL.setText("Full Name:");
@@ -350,8 +352,8 @@ public class HotelJFrame extends javax.swing.JFrame {
         addressL1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         addressL1.setText("Website:");
 
-        addressVal1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        addressVal1.setText("jtrinh21.github.io/portfolio/");
+        websiteVal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        websiteVal.setText("jtrinh21.github.io/portfolio/");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -390,7 +392,7 @@ public class HotelJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(addressL1)
                         .addGap(38, 38, 38)
-                        .addComponent(addressVal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(websiteVal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -415,7 +417,7 @@ public class HotelJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addressL1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addressVal1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(websiteVal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1824,22 +1826,45 @@ public class HotelJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_takePicButtonActionPerformed
 
     private void setTextsManager()
-    {
-        fullNameVal.setText("THAO TRINH");
-        jobVal.setText("Software Developer");
-        addressVal.setText("1142 Devereaux Avenue, Philadelphia, PA 19111");
-        emailVal.setText("dtrinh5@student.ccp.edu");
-        phoneVal.setText("510-309-8309");
-        langVal.setText("Java, C++, Python, Ruby, Kotlin");
-        techVal.setText("JDBC, MySQL, Git, phpMyAdmin, CSS");
-        opVal.setText("Windows, NetBeans, Eclipse, IntelliJ, Android Studio, Linux");
+    {        
+      
+        conn = LoginConnection.getConnection();
         
-        schoolName.setText("Community College of Philadelphia - Philadelphia, PA");
-        major.setText("Computer Science, 2017 - Present, GPA: 4.0");
-        course.setText("Data Structure and Algorithms, Object-Oriented Programming, Disrete Math");
-        course1.setText("Introduction to Computer Organization, Database Managment Systems");
-
+        try
+        {
+            preparedStmt = conn.prepareStatement("select * from manager_info where username = ?");
+            
+            preparedStmt.setString(1, Login.userField.getText());
+            
+            rSet = preparedStmt.executeQuery();
+                
+                if(rSet.next())
+                {
+                    
+                    fullNameVal.setText(rSet.getString("firstname") + " " + rSet.getString("lastname"));
+                    jobVal.setText(rSet.getString("position"));
+                    addressVal.setText(rSet.getString("address"));
+                    emailVal.setText(rSet.getString("email"));
+                    phoneVal.setText(rSet.getString("phone"));
+                    websiteVal.setText(rSet.getString("website"));
+                    langVal.setText(rSet.getString("skill1"));
+                    techVal.setText(rSet.getString("skill2"));
+                    opVal.setText(rSet.getString("skill3"));
+        
+                    schoolName.setText(rSet.getString("edu1"));
+                    major.setText(rSet.getString("edu2"));
+                    course.setText(rSet.getString("edu3"));
+                    course1.setText(rSet.getString("edu4"));
+                    profile.setIcon(ResizeImage(rSet.getString("profile")));
+                   
+                }            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(HotelJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+
     private void showTableData()
     {
         try
@@ -1854,46 +1879,11 @@ public class HotelJFrame extends javax.swing.JFrame {
             Logger.getLogger(HotelJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HotelJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HotelJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HotelJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HotelJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        
-       
-       
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HotelJFrame().setVisible(true); // set the hotel JFrame to visible
-            }
-        });
-
-        
-       
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressL;
     private javax.swing.JLabel addressL1;
     private javax.swing.JLabel addressVal;
-    private javax.swing.JLabel addressVal1;
     private javax.swing.JRadioButton agoda;
     private javax.swing.JRadioButton airBnb;
     private javax.swing.JButton bDelete;
@@ -1997,5 +1987,6 @@ public class HotelJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField totalValue;
     private javax.swing.JRadioButton tripA;
     private javax.swing.JRadioButton walkIn;
+    private javax.swing.JLabel websiteVal;
     // End of variables declaration//GEN-END:variables
 }
