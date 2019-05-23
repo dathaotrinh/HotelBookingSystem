@@ -3,8 +3,6 @@ package hotel;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,17 +28,8 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 
-/**
- *
- * @author Surface
- */
 public class HotelJFrame extends javax.swing.JFrame {
 
     /**
@@ -1829,8 +1818,8 @@ public class HotelJFrame extends javax.swing.JFrame {
         }
         
         camera.release();
-        
-        DisplayWebcam w = new DisplayWebcam(profile);
+        profile.repaint();
+        DisplayPicFromWebcam w = new DisplayPicFromWebcam(profile);
         
     }//GEN-LAST:event_takePicButtonActionPerformed
 

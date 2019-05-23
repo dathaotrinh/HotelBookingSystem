@@ -17,9 +17,9 @@ import org.opencv.imgcodecs.Imgcodecs;
  *
  * @author trinh
  */
-public class DisplayWebcam {
+public class DisplayPicFromWebcam {
     
-    public DisplayWebcam(JLabel profile)
+    public DisplayPicFromWebcam(JLabel profile)
     {
         displayImage(Mat2BufferedImage(Imgcodecs.imread("camera.jpg")), profile);
     }
