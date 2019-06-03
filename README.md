@@ -45,5 +45,5 @@ A software is built in desktop environment for supervisor-side to manage the boo
 ![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
    
 ## Comming Soon
-
-* Face ID to login
+* Real-time computer vision to take profile picture.
+* Face ID to login.
