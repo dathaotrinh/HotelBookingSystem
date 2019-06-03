@@ -5,6 +5,16 @@ A software is built in desktop environment for supervisor-side to manage the boo
 
 ![overview gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/hotelBookingSystem.gif)
 
+## Set-up
+
+* *Xampp*: PHP developer environment [download](https://www.apachefriends.org/index.html)
+
+![SetUpXampp](https://github.com/jtrinh21/HotelBookingSystem/blob/master/build/classes/Image/SetupXampp.gif)
+
+* *JDBC*: add libraries into the project (watch gif below)
+
+![SetUpJDBC](https://github.com/jtrinh21/HotelBookingSystem/blob/master/build/classes/Image/SetUpJDBC.gif)
+
 ## Features
 
 
