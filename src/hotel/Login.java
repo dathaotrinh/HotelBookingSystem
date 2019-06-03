@@ -172,7 +172,7 @@ public class Login extends javax.swing.JFrame {
                 {
                     HotelJFrame f = new HotelJFrame();
                     
-                 //   f.setSrting(userName);
+                 
                     f.setVisible(true);
                     setVisible(false);
                 }

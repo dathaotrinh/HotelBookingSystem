@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  * @author trinh
  */
 public class LoginConnection {
+    
     static Connection conn = null;
-
-        
+       
     public static Connection getConnection()
     {
            
