@@ -1,9 +1,12 @@
 # Hotel Booking System
 
-## Overview
-A software is built in desktop environment for supervisor-side to manage the booking system for small-hotel businesses.
+## Demo
 
 ![overview gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/hotelBookingSystem.gif)
+
+## Overview
+
+A software is built in desktop environment for supervisor-side to manage the booking system for small-hotel businesses.
 
 ## Set-up
 
