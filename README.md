@@ -29,7 +29,7 @@ A software is built in desktop environment for supervisor-side to manage the boo
 
 ## Explore
 
-* Comparing the username and password the user inputs, the systen pulls information from a database using phpMyAdmin.
+* Comparing the username and password the user inputs, the systen pulls information from a database using phpMyAdmin administration tool.
 * Notify the user if the username or password is incorrect.
 * Display the information of the user including private background information and profile picture.
 * Depend on who logging in, the information and image are different.
