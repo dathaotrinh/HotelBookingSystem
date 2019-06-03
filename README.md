@@ -38,7 +38,12 @@ A software is built in desktop environment for supervisor-side to manage the boo
    
 ![login gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/LoginFeature.gif)
 
+2. Take a picture
+
+   - Capture profile picture using webcam.
+   
+![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
+   
 ## Comming Soon
 
-* Capture profile picture using webcam.
 * Face ID to login
