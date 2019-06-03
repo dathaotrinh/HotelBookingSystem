@@ -21,13 +21,13 @@ A software is built in desktop environment for supervisor-side to manage the boo
 ## Features
 
 
-*	Verify the users using the login page by comparing the username and password stored in phpMyAdmin.
-*	Display the users’ information with a selected profile picture, allow the users to change the profile picture as they wish.
+*	Secure login credentials using the phpMyAdmin administration tool.
+*	Display information with a selected profile picture, allow to change.
+*  Capture profile picture using webcam.
 *	Load existed customers’ information from CSV file into the database by adopting Object-oriented design.
 *	Assign each customer a unique reservation ID and search for customers’ information using their assigned reservation ID.
 *	Avoid double-booking the same room at the same time period.
 *	Update and delete customers’ booking information as needed.
-
 
 
 ## Explore
@@ -41,12 +41,13 @@ A software is built in desktop environment for supervisor-side to manage the boo
    
 ![login gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/LoginFeature.gif)
 
-2. Take a picture
+2. Take a picture and Choose profile picture features
 
    - Capture profile picture using webcam.
+   - Allow the users to change the profile picture.
    
 ![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
    
-## Coming Soon
+### Coming Soon
 * Real-time computer vision to take profile picture.
 * Face ID to login.
