@@ -40,5 +40,5 @@ A software is built in desktop environment for supervisor-side to manage the boo
 
 ## New Features
 
-* Capture profile picture using webcame.
+* Capture profile picture using webcam.
 * Face ID to login (comming soon)
