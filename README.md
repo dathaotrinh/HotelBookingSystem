@@ -32,7 +32,7 @@ A software is built in desktop environment for supervisor-side to manage the boo
 
 ## Explore
 
-1. Login Frame
+#### Login Frame
 
    - Comparing the username and password the user inputs, the system pulls information from a database using phpMyAdmin administration tool.
    - Notify the user if the username or password is incorrect.
@@ -41,13 +41,13 @@ A software is built in desktop environment for supervisor-side to manage the boo
    
 ![login gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/LoginFeature.gif)
 
-2. Take a picture and Choose profile picture features
+#### Take a picture and Choose profile picture features
 
    - Capture profile picture using webcam.
    - Allow the users to change the profile picture.
    
 ![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
    
-### Coming Soon
+## Coming Soon
 * Real-time computer vision to take profile picture.
 * Face ID to login.
