@@ -21,11 +21,11 @@ A software is built in desktop environment for supervisor-side to manage the boo
 ## Features
 
 
+*	Load existed customers’ information from CSV file into the database by adopting Object-oriented design.
 *	Secure login credentials using the phpMyAdmin administration tool.
 *	Display information with a selected profile picture, allow to change.
 *  Capture profile picture using webcam.
-*	Load existed customers’ information from CSV file into the database by adopting Object-oriented design.
-*	Assign each customer a unique reservation ID and search for customers’ information using their assigned reservation ID.
+*	Assign each booking a unique reservation ID and search for information using the assigned reservation ID.
 *	Avoid double-booking the same room at the same time period.
 *	Update and delete customers’ booking information as needed.
 
