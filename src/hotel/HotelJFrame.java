@@ -1778,21 +1778,39 @@ public class HotelJFrame extends javax.swing.JFrame {
     }
 
     private void fileChooserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserButtonActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fChooser = new JFileChooser();
-        fChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
-        fChooser.addChoosableFileFilter(filter);
-        int result = fChooser.showSaveDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION)
-        {
-            File selectedFile = fChooser.getSelectedFile();
-            String path = selectedFile.getAbsolutePath();
-            profile.setIcon(ResizeImage(path));
-        }
-        else if(result == JFileChooser.CANCEL_OPTION)
-        {
-            JOptionPane.showMessageDialog(this, "No file selected.");
+        try {
+
+            JFileChooser fChooser = new JFileChooser();
+
+            fChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
+
+            fChooser.addChoosableFileFilter(filter);
+
+            conn = LoginConnection.getConnection();
+
+            String updateSQL = "update manager_info set profile = ? where manager_info.username = '" + Login.userField.getText() + "'"; 
+            
+            preparedStmt = conn.prepareStatement(updateSQL);
+                        
+
+            int result = fChooser.showSaveDialog(null);
+
+            if(result == JFileChooser.APPROVE_OPTION)
+            {
+                File selectedFile = fChooser.getSelectedFile();
+                String path = selectedFile.getAbsolutePath();
+                profile.setIcon(ResizeImage(path));
+                preparedStmt.setString(1, path);
+                preparedStmt.executeUpdate();
+            }
+            else if(result == JFileChooser.CANCEL_OPTION)
+            {
+                JOptionPane.showMessageDialog(this, "No file selected.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HotelJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_fileChooserButtonActionPerformed
 
@@ -1813,7 +1831,7 @@ public class HotelJFrame extends javax.swing.JFrame {
             {
                 if(camera.read(frame))
                 {
-                    Imgcodecs.imwrite("camera.jpg", frame);
+                    Imgcodecs.imwrite("C:\\Users\\trinh\\Documents\\GitHub\\HotelBookingSystem\\src\\Image\\camera.jpg", frame);
                     break;
                 }
             }
@@ -1829,7 +1847,6 @@ public class HotelJFrame extends javax.swing.JFrame {
     {        
       
         conn = LoginConnection.getConnection();
-        
         try
         {
             preparedStmt = conn.prepareStatement("select * from manager_info where username = ?");

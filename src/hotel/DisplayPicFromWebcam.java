@@ -8,6 +8,11 @@ package hotel;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import org.opencv.core.Mat;
@@ -21,7 +26,25 @@ public class DisplayPicFromWebcam {
     
     public DisplayPicFromWebcam(JLabel profile)
     {
-        displayImage(Mat2BufferedImage(Imgcodecs.imread("camera.jpg")), profile);
+        String path = "C:\\Users\\trinh\\Documents\\GitHub\\HotelBookingSystem\\src\\Image\\camera.jpg";
+        
+        displayImage(Mat2BufferedImage(Imgcodecs.imread(path)), profile);
+
+        try {
+
+           Connection conn = LoginConnection.getConnection();
+
+            String updateSQL = "update manager_info set profile = ? where manager_info.username = '" + Login.userField.getText() + "'"; 
+            
+            PreparedStatement preparedStmt = conn.prepareStatement(updateSQL);
+ 
+            preparedStmt.setString(1, path);
+ 
+            preparedStmt.executeUpdate();
+                        
+            } catch (SQLException ex) {
+                Logger.getLogger(HotelJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Image Mat2BufferedImage(Mat m) {
