@@ -167,6 +167,7 @@ public class HotelJFrame extends javax.swing.JFrame {
     
     private void setTexts(ResultSet rs) throws ParseException, SQLException
     {
+               
         resIDValue.setText(String.valueOf(rs.getInt("RES_ID")));
         firstNameValue.setText(rs.getString("FIRST_NAME"));
         lastNameValue.setText(rs.getString("LAST_NAME"));
@@ -175,9 +176,11 @@ public class HotelJFrame extends javax.swing.JFrame {
         emailValue.setText(rs.getString("EMAIL"));
         
         limitVal.setText(String.valueOf(rs.getInt("LIMIT")));
-        roomNumValue.setSelectedItem(String.valueOf(rs.getInt("ROOM_NUMBER")));
+        
         numGuestValue.setSelectedItem(String.valueOf(rs.getInt("NUM_GUESTS")));
-        roomTypeValue.setSelectedItem(String.valueOf(rs.getString("ROOM_TYPE")));     
+        roomTypeValue.setSelectedItem(String.valueOf(rs.getString("ROOM_TYPE")));          
+        roomNumValue.setSelectedItem(String.valueOf(rs.getInt("ROOM_NUMBER")));
+        
         depositValue.setText(String.valueOf(rs.getFloat("DEPOSIT")));
         totalValue.setText(String.valueOf(rs.getFloat("TOTAL")));
         paidValue.setText(String.valueOf(rs.getFloat("PAID")));
@@ -1376,6 +1379,12 @@ public class HotelJFrame extends javax.swing.JFrame {
                     java.util.Date dateIn = inDateChooser.getDate();
                     java.util.Date dateOut = outDateChooser.getDate();                
                     
+                    System.out.println(checkIn);
+                    System.out.println(checkOut);
+                    System.out.println(dateIn);
+                    System.out.println(dateOut);
+                    System.out.println(rs.getInt("ROOM_NUMBER"));
+                    System.out.println(Integer.parseInt(roomNumValue.getSelectedItem().toString()));
                     
                     if(checkIn.equals(dateIn) && checkOut.equals(dateOut)
                             && rs.getInt("ROOM_NUMBER") == Integer.parseInt(roomNumValue.getSelectedItem().toString()))
@@ -1401,7 +1410,7 @@ public class HotelJFrame extends javax.swing.JFrame {
                         ps.setInt(17, Integer.parseInt(resIDValue.getText())); 
                         ps.executeUpdate();      
                         
-                        JOptionPane.showMessageDialog(this, "Updated eservation ID " + resIDValue.getText() + ".");                        
+                        JOptionPane.showMessageDialog(this, "Updated reservation ID " + resIDValue.getText() + ".");                        
                     }
                     else if(checkIn.equals(dateIn) && checkOut.equals(dateOut)
                             && rs.getInt("ROOM_NUMBER") != Integer.parseInt(roomNumValue.getSelectedItem().toString()))
@@ -1419,6 +1428,31 @@ public class HotelJFrame extends javax.swing.JFrame {
                                         if(rs3.next())
                                         {
                                             doubleBooked = true;
+                                        }
+                                        else
+                                        {
+                                                                    
+                                            PreparedStatement ps = conn.prepareStatement(sqlUpdate);
+                                            ps.setString(1, firstNameValue.getText());
+                                            ps.setString(2, lastNameValue.getText());
+                                            ps.setString(3, nationalityValue.getText());
+                                            ps.setString(4, getGuestType());
+                                            ps.setString(5, roomTypeValue.getSelectedItem().toString());
+                                            ps.setInt(6, Integer.parseInt(roomNumValue.getSelectedItem().toString()));
+                                            ps.setInt(7, Integer.parseInt(numGuestValue.getSelectedItem().toString()));
+                                            ps.setInt(8, Integer.parseInt(limitVal.getText()));
+                                            ps.setFloat(9, Float.parseFloat(depositValue.getText()));
+                                            ps.setFloat(10, Float.parseFloat(totalValue.getText()));            
+                                            ps.setFloat(11, Float.parseFloat(paidValue.getText()));                                           
+                                            ps.setString(12, inDate);
+                                            ps.setString(13, outDate);
+                                            ps.setString(14, phoneValue.getText());
+                                            ps.setString(15, emailValue.getText());  
+                                            ps.setString(16, noteField.getText());
+                                            ps.setInt(17, Integer.parseInt(resIDValue.getText())); 
+                                            ps.executeUpdate();      
+                        
+                                            JOptionPane.showMessageDialog(this, "Updated reservation ID " + resIDValue.getText() + ".");   
                                         }
 
                                         if(doubleBooked)
