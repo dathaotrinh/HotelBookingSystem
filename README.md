@@ -1,9 +1,12 @@
 # Hotel Booking System
 
-## Overview
-A software is built in desktop environment for supervisor-side to manage the booking system for small-hotel businesses.
+## Demo
 
 ![overview gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/hotelBookingSystem.gif)
+
+## Overview
+
+A software is built in desktop environment for supervisor-side to manage the booking system for small-hotel businesses.
 
 ## Set-up
 
@@ -18,18 +21,18 @@ A software is built in desktop environment for supervisor-side to manage the boo
 ## Features
 
 
-*	Verify the users using the login page by comparing the username and password stored in phpMyAdmin.
-*	Display the users’ information with a selected profile picture, allow the users to change the profile picture as they wish.
 *	Load existed customers’ information from CSV file into the database by adopting Object-oriented design.
-*	Assign each customer a unique reservation ID and search for customers’ information using their assigned reservation ID.
+*	Secure login credentials using the phpMyAdmin administration tool.
+*	Display information with a selected profile picture, allow to change.
+*  Capture profile picture using webcam.
+*	Assign each booking a unique reservation ID and search for information using the assigned reservation ID.
 *	Avoid double-booking the same room at the same time period.
 *	Update and delete customers’ booking information as needed.
 
 
-
 ## Explore
 
-1. Login Frame
+#### Login Frame
 
    - Comparing the username and password the user inputs, the system pulls information from a database using phpMyAdmin administration tool.
    - Notify the user if the username or password is incorrect.
@@ -38,7 +41,13 @@ A software is built in desktop environment for supervisor-side to manage the boo
    
 ![login gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/LoginFeature.gif)
 
-## Comming Soon
+#### Take a picture and Choose profile picture features
 
-* Capture profile picture using webcam.
-* Face ID to login
+   - Capture profile picture using webcam.
+   - Allow the users to change the profile picture.
+   
+![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
+   
+## Coming Soon
+* Real-time computer vision to take profile picture.
+* Face ID to login.
