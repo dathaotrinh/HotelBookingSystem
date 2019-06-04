@@ -46,7 +46,7 @@ A software is built in desktop environment for supervisor-side to manage the boo
    - Capture profile picture using webcam.
    - Allow the users to change the profile picture.
    
-![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic_1.gif)
+![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
    
 ## Coming Soon
 * Real-time computer vision to take profile picture.
