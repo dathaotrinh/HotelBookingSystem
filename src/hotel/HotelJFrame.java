@@ -1322,22 +1322,11 @@ public class HotelJFrame extends javax.swing.JFrame {
              
         try{
             
-            boolean alreadyExist = true; // create a boolean named alreadyExist and set it to true
-            boolean doubleBooked = false; // create a boolean named doubleBooked and set it to false
-
              Statement stmtInsert = conn.createStatement();
-            // in the connection to the database, create a statement and assign it back to stmtInsert
-            // stmtInsert will be used later on when the user wants to insert new reservation to the table
-            Statement stmtDoubleBooked = conn.createStatement();
-            // in the connection to the database, create a statement and assign it back to stmtDoubleBooked
-            // stmtDoubleBooked will be used later on to check double booking
             
             // assign the resultset of the Select query to resultset named rs
             ResultSet rs = stmt.executeQuery("SELECT * FROM GUESTS");         
-                                   
-            // declare String named sqlUpdate
-            String sqlUpdate = "UPDATE GUESTS SET FIRST_NAME = ?, LAST_NAME = ?, NATIONALITY = ?, GUEST_TYPE = ?, ROOM_TYPE = ?, ROOM_NUMBER = ?, NUM_GUESTS = ?, LIMIT = ?, DEPOSIT = ?, TOTAL = ?, PAID = ?, CHECK_IN = ?, CHECK_OUT = ?, PHONE = ?, EMAIL = ?, NOTE = ? WHERE RES_ID = ?"; 
-            
+                                               
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");            
             String inDate = df.format(inDateChooser.getDate());
             String outDate = df.format(outDateChooser.getDate());
@@ -1362,161 +1351,78 @@ public class HotelJFrame extends javax.swing.JFrame {
                                         + "', '" + phoneValue.getText()
                                         + "', '" + emailValue.getText() 
                                         + "', '" + noteField.getText() + "')"  ;
-                         
-            boolean needToCheckRoom = false;
-            boolean needToCheckDate = false;
-            boolean sameRES = false;
+
+            boolean overwriteRS = true;
 
             while(rs.next())
             {
                 if(rs.getInt("RES_ID") == Integer.parseInt(resIDValue.getText()))
                 {
-                    sameRES= true;
-                    
-                    
+                    overwriteRS = false;            
                     java.util.Date checkIn = df.parse(String.valueOf(rs.getDate("CHECK_IN")));
                     java.util.Date checkOut = df.parse(String.valueOf(rs.getDate("CHECK_OUT")));            
                     java.util.Date dateIn = inDateChooser.getDate();
-                    java.util.Date dateOut = outDateChooser.getDate();                
-                    
-                    System.out.println(checkIn);
-                    System.out.println(checkOut);
-                    System.out.println(dateIn);
-                    System.out.println(dateOut);
-                    System.out.println(rs.getInt("ROOM_NUMBER"));
-                    System.out.println(Integer.parseInt(roomNumValue.getSelectedItem().toString()));
+                    java.util.Date dateOut = outDateChooser.getDate();   
                     
                     if(checkIn.equals(dateIn) && checkOut.equals(dateOut)
                             && rs.getInt("ROOM_NUMBER") == Integer.parseInt(roomNumValue.getSelectedItem().toString()))
                     {
 
-                        PreparedStatement ps = conn.prepareStatement(sqlUpdate);
-                        ps.setString(1, firstNameValue.getText());
-                        ps.setString(2, lastNameValue.getText());
-                        ps.setString(3, nationalityValue.getText());
-                        ps.setString(4, getGuestType());
-                        ps.setString(5, roomTypeValue.getSelectedItem().toString());
-                        ps.setInt(6, Integer.parseInt(roomNumValue.getSelectedItem().toString()));
-                        ps.setInt(7, Integer.parseInt(numGuestValue.getSelectedItem().toString()));
-                        ps.setInt(8, Integer.parseInt(limitVal.getText()));
-                        ps.setFloat(9, Float.parseFloat(depositValue.getText()));
-                        ps.setFloat(10, Float.parseFloat(totalValue.getText()));            
-                        ps.setFloat(11, Float.parseFloat(paidValue.getText()));                                           
-                        ps.setString(12, inDate);
-                        ps.setString(13, outDate);
-                        ps.setString(14, phoneValue.getText());
-                        ps.setString(15, emailValue.getText());  
-                        ps.setString(16, noteField.getText());
-                        ps.setInt(17, Integer.parseInt(resIDValue.getText())); 
-                        ps.executeUpdate();      
-                        
-                        JOptionPane.showMessageDialog(this, "Updated reservation ID " + resIDValue.getText() + ".");                        
+                        updateSQL(inDate, outDate);   
+                        break;
                     }
-                    else if(checkIn.equals(dateIn) && checkOut.equals(dateOut)
-                            && rs.getInt("ROOM_NUMBER") != Integer.parseInt(roomNumValue.getSelectedItem().toString()))
+                    else 
+                    {
+                        ResultSet rs3 = stmt.executeQuery(
+                            "SELECT ROOM_NUMBER, CHECK_IN, CHECK_OUT\n" +
+                            "FROM GUESTS\n" +
+                            "WHERE ROOM_NUMBER = " + roomNumber + "\n" +
+                            "AND NOT\n" +
+                            " (\n" +
+                            "  ('" + outDate + "' <= CHECK_IN AND '" + outDate + "' > '" + inDate + "')\n" +
+                            "  OR ('" + inDate + "' >= CHECK_OUT AND '" + outDate + "' > '" + inDate + "')\n" +
+                            ")" );
+
+                            if(rs3.next())
                             {
-                                ResultSet rs3 = stmtDoubleBooked.executeQuery(
-                                            "SELECT ROOM_NUMBER, CHECK_IN, CHECK_OUT\n" +
-                                            "FROM GUESTS\n" +
-                                            "WHERE ROOM_NUMBER = " + roomNumber + "\n" +
-                                            "AND NOT\n" +
-                                            " (\n" +
-                                            "  ('" + outDate + "' <= CHECK_IN AND '" + outDate + "' > '" + inDate + "')\n" +
-                                            "  OR ('" + inDate + "' >= CHECK_OUT AND '" + outDate + "' > '" + inDate + "')\n" +
-                                            ")" );
-
-                                        if(rs3.next())
-                                        {
-                                            doubleBooked = true;
-                                        }
-                                        else
-                                        {
-                                                                    
-                                            PreparedStatement ps = conn.prepareStatement(sqlUpdate);
-                                            ps.setString(1, firstNameValue.getText());
-                                            ps.setString(2, lastNameValue.getText());
-                                            ps.setString(3, nationalityValue.getText());
-                                            ps.setString(4, getGuestType());
-                                            ps.setString(5, roomTypeValue.getSelectedItem().toString());
-                                            ps.setInt(6, Integer.parseInt(roomNumValue.getSelectedItem().toString()));
-                                            ps.setInt(7, Integer.parseInt(numGuestValue.getSelectedItem().toString()));
-                                            ps.setInt(8, Integer.parseInt(limitVal.getText()));
-                                            ps.setFloat(9, Float.parseFloat(depositValue.getText()));
-                                            ps.setFloat(10, Float.parseFloat(totalValue.getText()));            
-                                            ps.setFloat(11, Float.parseFloat(paidValue.getText()));                                           
-                                            ps.setString(12, inDate);
-                                            ps.setString(13, outDate);
-                                            ps.setString(14, phoneValue.getText());
-                                            ps.setString(15, emailValue.getText());  
-                                            ps.setString(16, noteField.getText());
-                                            ps.setInt(17, Integer.parseInt(resIDValue.getText())); 
-                                            ps.executeUpdate();      
-                        
-                                            JOptionPane.showMessageDialog(this, "Updated reservation ID " + resIDValue.getText() + ".");   
-                                        }
-
-                                        if(doubleBooked)
-                                        {
-                                            JOptionPane.showMessageDialog(this, 
-                                                                    "Double booking detected");
-                                        }
+                                JOptionPane.showMessageDialog(this,
+						"Double booking detected.");	
+                                break;
                                 
                             }
-                    else
-                    {
-                         needToCheckDate = true;
-                    }
-                }
-            }
-
-            if((sameRES==false) || (sameRES==true && needToCheckDate==true))           
-            {                      
-                ResultSet rs1 = stmtDoubleBooked.executeQuery(
-                        "SELECT ROOM_NUMBER, CHECK_IN, CHECK_OUT\n" +
-                        "FROM GUESTS\n" +
-                        "WHERE ROOM_NUMBER = " + roomNumber + "\n" +
-                        "AND NOT\n" +
-                        " (\n" +
-                        "  ('" + outDate + "' <= CHECK_IN AND '" + outDate + "' > '" + inDate + "')\n" +
-                        "  OR ('" + inDate + "' >= CHECK_OUT AND '" + outDate + "' > '" + inDate + "')\n" +
-                        ")" );
-
-                if(rs1.next())
-                {
-                    doubleBooked = true;
-                }
-
-                if(doubleBooked)
-                {
-                    JOptionPane.showMessageDialog(this, 
-                            "Double booking detected");
-                }
-
-                ResultSet rs3 = stmt.executeQuery("SELECT * FROM GUESTS");  
-                if((sameRES==false && doubleBooked == false)
-                    || (sameRES==true && needToCheckDate==true && doubleBooked == false && needToCheckRoom == false))
-                {
-                    
-                    while(rs3.next())
-                    {
-                   
-                        if(rs3.getInt("RES_ID") != Integer.parseInt(resIDValue.getText()))
-                        
-                        {
-                            alreadyExist = false; // if not already exist, then it false
-                        }                                
+                            else
+                            {                                   
+                                updateSQL(inDate, outDate);
+                                break;
+                            }
+                                      
+                        }
                     }
                 }
             
-                if (alreadyExist == false)
-                {     
-                    stmtInsert.execute(sqlInsert); 
-                
-                    JOptionPane.showMessageDialog(this, "Saved reservation ID " + resIDValue.getText());               
-                    
-                }         
-            }      
+            if(overwriteRS)
+            {
+                ResultSet rs3 = stmt.executeQuery(
+                            "SELECT ROOM_NUMBER, CHECK_IN, CHECK_OUT\n" +
+                            "FROM GUESTS\n" +
+                            "WHERE ROOM_NUMBER = " + roomNumber + "\n" +
+                            "AND NOT\n" +
+                            " (\n" +
+                            "  ('" + outDate + "' <= CHECK_IN AND '" + outDate + "' > '" + inDate + "')\n" +
+                            "  OR ('" + inDate + "' >= CHECK_OUT AND '" + outDate + "' > '" + inDate + "')\n" +
+                            ")" );
 
+                            if(rs3.next())
+                            {
+                                JOptionPane.showMessageDialog(this,
+						"Double booking detected.");	                                
+                            }
+                            else
+                            {                                   
+                                stmtInsert.execute(sqlInsert);                
+                                JOptionPane.showMessageDialog(this, "Saved reservation ID " + resIDValue.getText());
+                            }
+            }
         } catch (SQLException e){
             e.printStackTrace();
             // print out a path of errors so that the programmer can keep track of
@@ -1542,6 +1448,35 @@ public class HotelJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
+    
+    
+    private void updateSQL(String inDate, String outDate) throws SQLException
+    {
+        String sqlUpdate = "UPDATE GUESTS SET FIRST_NAME = ?, LAST_NAME = ?, NATIONALITY = ?, GUEST_TYPE = ?, ROOM_TYPE = ?, ROOM_NUMBER = ?, NUM_GUESTS = ?, LIMIT = ?, DEPOSIT = ?, TOTAL = ?, PAID = ?, CHECK_IN = ?, CHECK_OUT = ?, PHONE = ?, EMAIL = ?, NOTE = ? WHERE RES_ID = ?"; 
+        PreparedStatement ps = conn.prepareStatement(sqlUpdate);
+        ps.setString(1, firstNameValue.getText());
+        ps.setString(2, lastNameValue.getText());
+        ps.setString(3, nationalityValue.getText());
+        ps.setString(4, getGuestType());
+        ps.setString(5, roomTypeValue.getSelectedItem().toString());
+        ps.setInt(6, Integer.parseInt(roomNumValue.getSelectedItem().toString()));
+        ps.setInt(7, Integer.parseInt(numGuestValue.getSelectedItem().toString()));
+        ps.setInt(8, Integer.parseInt(limitVal.getText()));
+        ps.setFloat(9, Float.parseFloat(depositValue.getText()));
+        ps.setFloat(10, Float.parseFloat(totalValue.getText()));            
+        ps.setFloat(11, Float.parseFloat(paidValue.getText()));                                           
+        ps.setString(12, inDate);
+        ps.setString(13, outDate);
+        ps.setString(14, phoneValue.getText());
+        ps.setString(15, emailValue.getText());  
+        ps.setString(16, noteField.getText());
+        ps.setInt(17, Integer.parseInt(resIDValue.getText())); 
+        ps.executeUpdate();      
+                        
+        JOptionPane.showMessageDialog(this, "Updated reservation ID " + resIDValue.getText() + "."); 
+    }
+    
+    
     private void bNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNextActionPerformed
         // TODO add your handling code here:
         try{
