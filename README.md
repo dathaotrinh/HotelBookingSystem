@@ -32,6 +32,13 @@ A software is built in desktop environment for supervisor-side to manage the boo
 
 ## Explore
 
+#### Take a picture and Choose profile picture features (new)
+
+   - Capture profile picture using webcam.
+   - Allow the users to change the profile picture.
+   
+![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
+
 #### Login Frame
 
    - Comparing the username and password the user inputs, the system pulls information from a database using phpMyAdmin administration tool.
@@ -41,12 +48,17 @@ A software is built in desktop environment for supervisor-side to manage the boo
    
 ![login gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/LoginFeature.gif)
 
-#### Take a picture and Choose profile picture features
+#### Prevent double-booking and insert new reservation ID
 
-   - Capture profile picture using webcam.
-   - Allow the users to change the profile picture.
-   
-![takapic gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/TakeAPic.gif)
+![doublebooked gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/DoubleBooked.gif)
+
+#### Modify old reservation, reject double booking if encounter, delete cancelled reservation
+
+![old gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/DoubleBookedOldRSAndDelete.gif)
+
+#### Notify if there is no other reservation to be displayed
+
+![previousnext gif](https://github.com/jtrinh21/HotelBookingSystem/blob/master/src/Image/PreviousNext.gif)
    
 ## Coming Soon
 * Real-time computer vision to take profile picture.
