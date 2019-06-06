@@ -6,7 +6,7 @@
 
 ## Overview
 
-A software is built in desktop environment for supervisor-side to manage the booking system for small-hotel businesses.
+An application is built in desktop environment for supervisor-side to manage the booking system for small-hotel businesses.
 
 ## Set-up
 
