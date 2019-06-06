@@ -32,7 +32,7 @@ A software is built in desktop environment for supervisor-side to manage the boo
 
 ## Explore
 
-#### Take a picture and Choose profile picture features (new)
+#### Take a picture and Choose profile picture features (latest)
 
    - Capture profile picture using webcam.
    - Allow the users to change the profile picture.
